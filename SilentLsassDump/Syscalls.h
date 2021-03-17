@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
 #include "syscalls-asm.h"
 
 typedef struct _SYSTEM_HANDLE

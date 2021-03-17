@@ -2,4 +2,4 @@
 
 | Name              | Syntax                |
 | ----------------- | --------------------- |
-| Silent Lsass Dump | silentLsassDump <PID> |
+| Silent Lsass Dump | silentLsassDump < LSASS PID > |
