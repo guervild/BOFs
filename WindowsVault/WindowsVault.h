@@ -4,7 +4,6 @@
 #include <wincrypt.h>
 #include <shlobj.h>
 #include <wchar.h>
-#include <VersionHelpers.h>
 
 #include "beacon.h"
 
